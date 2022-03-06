@@ -236,7 +236,7 @@ A Telegram Music+Video Streaming bot with some useful features.
 All commands can be used with: / """
 
 
-@app.on_message(filters.command("") & filters.private)
+@app.on_message(filters.command("mhelp") & filters.private)
 async def help_command(_, message):
     text, keyboard = await help_parser(message.from_user.mention)
     await app.send_message(message.chat.id, text, reply_markup=keyboard)
@@ -371,7 +371,7 @@ async def start_command(_, message):
 
 async def help_parser(name, keyboard=None):
     if not keyboard:
-        keyboard = InlineKeyboardMarkup(paginate_modules(0, HELPABLE, "help"))
+        keyboard = InlineKeyboardMarkup(paginate_modules(0, HELPABLE, "mhelp"))
     return (
         """Hello {first_name},
 
@@ -391,7 +391,7 @@ async def yins(_, CallbackQuery):
     await CallbackQuery.message.edit(text, reply_markup=keyboard)
 
 
-@app.on_callback_query(filters.regex(r"helpm_(.*?)")
+@app.on_callback_query(filters.regex(r"mhelp_(.*?)"))
 async def help_button(client, query):
     home_match = re.match(r"help_home\((.+?)\)", query.data)
     mod_match = re.match(r"help_module\((.+?)\)", query.data)
